@@ -11,7 +11,14 @@ const useStyles = makeStyles({
 	},
 });
 
-const Form = ({ open, handleToggle, handleSubmit, handleChanges, member }) => {
+const Form = ({
+	open,
+	handleToggle,
+	handleSubmit,
+	handleChanges,
+	member,
+	memberToEdit,
+}) => {
 	const classes = useStyles();
 
 	return (

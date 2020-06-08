@@ -7,18 +7,39 @@ import Navbar from './components/Navbar';
 import { initialData } from './blankData';
 
 function App() {
+	// All users to be rendered as cards
 	const [teamMembers, setTeamMembers] = useState([]);
-	// const [memberToEdit, setMemberToEdit] = useState({});
 
+	// member being edited
+	const [memberToEdit, setMemberToEdit] = useState({});
+
+	//State to control Form Drawer
 	const [open, setOpen] = useState(false);
 
+	// Form opened by add new button or edit button
+	const [isEditing, setIsEditing] = useState(false);
+
+	//Member being added
 	const [member, setMember] = useState(initialData);
 
-	function handleEdit(e, mem) {
+	// Handles User Editing
+	function handleEdit(mem) {
+		setIsEditing(true);
 		handleToggle();
-		setMember(mem);
+		setMemberToEdit(mem);
+		console.log(memberToEdit);
 	}
 
+	//side effect for editing
+	useEffect(() => {
+		return () => {
+			setMember(initialData);
+			setIsEditing(false);
+			console.log(memberToEdit);
+		};
+	}, [memberToEdit]);
+
+	// Handles form submission
 	function handleSubmit(e) {
 		e.preventDefault();
 		addMember(member);
@@ -30,6 +51,7 @@ function App() {
 		e.preventDefault();
 		const [section, key] = e.target.name.split('.');
 
+		// If property is nested, do...
 		if (key) {
 			setMember({
 				...member,
@@ -38,6 +60,7 @@ function App() {
 					[key]: e.target.value,
 				},
 			});
+			// If property not nested, do...
 		} else {
 			setMember({
 				...member,
@@ -46,16 +69,12 @@ function App() {
 		}
 	}
 
+	//Handles Form Drawer open/close
 	function handleToggle() {
 		setOpen(!open);
 	}
 
-	useEffect(() => {
-		return () => {
-			setMember(initialData);
-		};
-	}, [member]);
-
+	// Get data from Random User Generator API
 	useEffect(() => {
 		axios
 			.get(
@@ -66,10 +85,13 @@ function App() {
 			});
 	}, []);
 
+	//Add a new Employee Card
 	function addMember(newMember) {
 		setTeamMembers([...teamMembers, newMember]);
 	}
-	console.log(teamMembers);
+
+	// console.log(teamMembers);
+
 	return (
 		<Grid container fluid='true' direction='column' alignItems='center'>
 			<Grid item>
@@ -83,13 +105,13 @@ function App() {
 			</Grid>
 
 			<Grid item>
-				{' '}
 				<Form
 					open={open}
 					handleToggle={handleToggle}
 					handleChanges={handleChanges}
 					handleSubmit={handleSubmit}
 					member={member}
+					memberToEdit={memberToEdit}
 				/>
 			</Grid>
 		</Grid>

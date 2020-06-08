@@ -48,7 +48,13 @@ const TeamMemberCard = ({ teamMember, handleEdit }) => {
 					>{`${teamMember.location.city}, ${teamMember.location.state}, ${teamMember.location.country}`}</Typography>
 				}
 				action={
-					<IconButton aria-label='settings' onClick={handleEdit}>
+					<IconButton
+						aria-label='settings'
+						onClick={() => {
+							handleEdit(teamMember);
+							// console.log(teamMember);
+						}}
+					>
 						<EditIcon />
 					</IconButton>
 				}
