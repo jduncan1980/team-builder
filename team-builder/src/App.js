@@ -4,37 +4,25 @@ import Form from './components/Form';
 import TeamList from './components/TeamList';
 import { Grid } from '@material-ui/core';
 import Navbar from './components/Navbar';
+import { initialData } from './blankData';
 
 function App() {
 	const [teamMembers, setTeamMembers] = useState([]);
-	const [memberToEdit, setMemberToEdit] = useState({});
+	// const [memberToEdit, setMemberToEdit] = useState({});
 
 	const [open, setOpen] = useState(false);
 
-	const [member, setMember] = useState({
-		name: { first: '', last: '' },
-		email: '',
-		location: { city: '', state: '', country: '' },
-		phone: '',
-		picture: {
-			medium:
-				'http://www.sprlaw.net/wp-content/uploads/2017/05/blank_headshot.jpg',
-		},
-	});
+	const [member, setMember] = useState(initialData);
 
-	function handleSubmit(event) {
-		event.preventDefault();
+	function handleEdit(e, mem) {
+		handleToggle();
+		setMember(mem);
+	}
+
+	function handleSubmit(e) {
+		e.preventDefault();
 		addMember(member);
-		setMember({
-			name: { first: '', last: '' },
-			email: '',
-			location: { city: '', state: '', country: '' },
-			phone: '',
-			picture: {
-				medium:
-					'http://www.sprlaw.net/wp-content/uploads/2017/05/blank_headshot.jpg',
-			},
-		});
+		setMember(initialData);
 		handleToggle();
 	}
 
@@ -61,10 +49,17 @@ function App() {
 	function handleToggle() {
 		setOpen(!open);
 	}
+
+	useEffect(() => {
+		return () => {
+			setMember(initialData);
+		};
+	}, [member]);
+
 	useEffect(() => {
 		axios
 			.get(
-				'https://cors-anywhere.herokuapp.com/https://randomuser.me/api/?results=42&inc=name,location,email,phone,picture'
+				'https://cors-anywhere.herokuapp.com/https://randomuser.me/api/?results=42&inc=name,location,email,phone,picture,id'
 			)
 			.then((res) => {
 				setTeamMembers(res.data.results);
@@ -78,11 +73,15 @@ function App() {
 	return (
 		<Grid container fluid='true' direction='column' alignItems='center'>
 			<Grid item>
-				{/* <Form addMember={addMember} /> */}
 				<Navbar handleToggle={handleToggle} />
 			</Grid>
 
-			<Grid item>{teamMembers && <TeamList teamMembers={teamMembers} />}</Grid>
+			<Grid item>
+				{teamMembers && (
+					<TeamList teamMembers={teamMembers} handleEdit={handleEdit} />
+				)}
+			</Grid>
+
 			<Grid item>
 				{' '}
 				<Form

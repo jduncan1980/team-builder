@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const TeamMemberCard = ({ teamMember }) => {
+const TeamMemberCard = ({ teamMember, handleEdit }) => {
 	const classes = useStyles();
 	return (
 		<Card className={classes.card}>
@@ -48,7 +48,7 @@ const TeamMemberCard = ({ teamMember }) => {
 					>{`${teamMember.location.city}, ${teamMember.location.state}, ${teamMember.location.country}`}</Typography>
 				}
 				action={
-					<IconButton aria-label='settings'>
+					<IconButton aria-label='settings' onClick={handleEdit}>
 						<EditIcon />
 					</IconButton>
 				}
