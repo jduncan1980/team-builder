@@ -1,7 +1,6 @@
 import React from 'react';
 import TeamMemberCard from './TeamMemberCard';
 import { Grid } from '@material-ui/core';
-import { v1 as uuidv1 } from 'uuid';
 
 const TeamList = ({ teamMembers }) => {
 	return (
