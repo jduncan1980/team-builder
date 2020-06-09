@@ -29,10 +29,12 @@ function App() {
 	function editMember(member) {
 		const newMemberList = teamMembers.map((teamMember, index) => {
 			if (teamMember.email === member.email) {
-				teamMember[index] = member;
+				console.log('match!');
+				teamMembers[index] = member;
 			}
+			return teamMember;
 		});
-		setTeamMembers(newMemberList);
+		console.log(newMemberList);
 	}
 
 	// Handles User Editing
