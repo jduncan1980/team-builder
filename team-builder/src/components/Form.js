@@ -18,6 +18,7 @@ const Form = ({
 	handleChanges,
 	member,
 	memberToEdit,
+	isEditing,
 }) => {
 	const classes = useStyles();
 
@@ -36,7 +37,7 @@ const Form = ({
 						<TextField
 							placeholder='First Name...'
 							name='name.first'
-							value={member.name.first}
+							value={isEditing ? memberToEdit.name.first : member.name.first}
 							onChange={handleChanges}
 							id='name.first'
 							label='First Name'
@@ -44,7 +45,7 @@ const Form = ({
 						<TextField
 							placeholder='Last Name...'
 							name='name.last'
-							value={member.name.last}
+							value={isEditing ? memberToEdit.name.last : member.name.last}
 							onChange={handleChanges}
 							id='name.last'
 							label='Last Name'
@@ -52,7 +53,7 @@ const Form = ({
 						<TextField
 							placeholder='Employee Email...'
 							name='email'
-							value={member.email}
+							value={isEditing ? memberToEdit.email : member.email}
 							onChange={handleChanges}
 							id='email'
 							label='Email'
@@ -60,7 +61,9 @@ const Form = ({
 						<TextField
 							placeholder='Employee City...'
 							name='location.city'
-							value={member.location.city}
+							value={
+								isEditing ? memberToEdit.location.city : member.location.city
+							}
 							onChange={handleChanges}
 							id='location.city'
 							label='City'
@@ -68,7 +71,9 @@ const Form = ({
 						<TextField
 							placeholder='Employee State...'
 							name='location.state'
-							value={member.location.state}
+							value={
+								isEditing ? memberToEdit.location.state : member.location.state
+							}
 							onChange={handleChanges}
 							id='location.state'
 							label='State'
@@ -76,15 +81,19 @@ const Form = ({
 						<TextField
 							placeholder='Employee Country...'
 							name='location.country'
-							value={member.role}
+							value={
+								isEditing
+									? memberToEdit.location.country
+									: member.location.country
+							}
 							onChange={handleChanges}
 							id='location.country'
 							label='Country'
 						/>
 						<TextField
-							placeholder='Employee Country...'
+							placeholder='Employee Phone...'
 							name='phone'
-							value={member.role}
+							value={isEditing ? memberToEdit.phone : member.phone}
 							onChange={handleChanges}
 							id='phone'
 							label='Phone'

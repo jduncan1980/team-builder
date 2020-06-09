@@ -11,7 +11,7 @@ function App() {
 	const [teamMembers, setTeamMembers] = useState([]);
 
 	// member being edited
-	const [memberToEdit, setMemberToEdit] = useState({});
+	const [memberToEdit, setMemberToEdit] = useState(initialData);
 
 	//State to control Form Drawer
 	const [open, setOpen] = useState(false);
@@ -21,6 +21,19 @@ function App() {
 
 	//Member being added
 	const [member, setMember] = useState(initialData);
+	//Add a new Employee Card
+	function addMember(newMember) {
+		setTeamMembers([...teamMembers, newMember]);
+	}
+
+	function editMember(member) {
+		const newMemberList = teamMembers.map((teamMember, index) => {
+			if (teamMember.email === member.email) {
+				teamMember[index] = member;
+			}
+		});
+		setTeamMembers(newMemberList);
+	}
 
 	// Handles User Editing
 	function handleEdit(mem) {
@@ -30,20 +43,13 @@ function App() {
 		console.log(mem);
 	}
 
-	//side effect for editing
-	useEffect(() => {
-		return () => {
-			setMember(initialData);
-			setIsEditing(false);
-			console.log(memberToEdit);
-		};
-	}, [memberToEdit]);
-
 	// Handles form submission
 	function handleSubmit(e) {
 		e.preventDefault();
-		addMember(member);
+		isEditing ? editMember(memberToEdit) : addMember(member);
 		setMember(initialData);
+		setMemberToEdit(initialData);
+		setIsEditing(false);
 		handleToggle();
 	}
 
@@ -51,21 +57,40 @@ function App() {
 		e.preventDefault();
 		const [section, key] = e.target.name.split('.');
 
-		// If property is nested, do...
-		if (key) {
-			setMember({
-				...member,
-				[section]: {
-					...member[section],
-					[key]: e.target.value,
-				},
-			});
-			// If property not nested, do...
-		} else {
-			setMember({
-				...member,
-				[section]: e.target.value,
-			});
+		if (!isEditing) {
+			// If property is nested, do...
+			if (key) {
+				setMember({
+					...member,
+					[section]: {
+						...member[section],
+						[key]: e.target.value,
+					},
+				});
+				// If property not nested, do...
+			} else {
+				setMember({
+					...member,
+					[section]: e.target.value,
+				});
+			}
+		} else if (isEditing) {
+			// If property is nested, do...
+			if (key) {
+				setMemberToEdit({
+					...memberToEdit,
+					[section]: {
+						...memberToEdit[section],
+						[key]: e.target.value,
+					},
+				});
+				// If property not nested, do...
+			} else {
+				setMemberToEdit({
+					...memberToEdit,
+					[section]: e.target.value,
+				});
+			}
 		}
 	}
 
@@ -82,13 +107,9 @@ function App() {
 			)
 			.then((res) => {
 				setTeamMembers(res.data.results);
+				console.log(res.data.results);
 			});
 	}, []);
-
-	//Add a new Employee Card
-	function addMember(newMember) {
-		setTeamMembers([...teamMembers, newMember]);
-	}
 
 	// console.log(teamMembers);
 

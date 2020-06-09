@@ -52,7 +52,6 @@ const TeamMemberCard = ({ teamMember, handleEdit }) => {
 						aria-label='settings'
 						onClick={() => {
 							handleEdit(teamMember);
-							// console.log(teamMember);
 						}}
 					>
 						<EditIcon />
