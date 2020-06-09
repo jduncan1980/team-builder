@@ -27,7 +27,7 @@ function App() {
 		setIsEditing(true);
 		handleToggle();
 		setMemberToEdit(mem);
-		console.log(memberToEdit);
+		console.log(mem);
 	}
 
 	//side effect for editing
@@ -112,6 +112,7 @@ function App() {
 					handleSubmit={handleSubmit}
 					member={member}
 					memberToEdit={memberToEdit}
+					isEditing={isEditing}
 				/>
 			</Grid>
 		</Grid>
