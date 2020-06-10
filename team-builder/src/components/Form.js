@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Button, Drawer, FormGroup, TextField } from '@material-ui/core';
+import {
+	Button,
+	Drawer,
+	FormGroup,
+	TextField,
+	Container,
+} from '@material-ui/core';
 
 const useStyles = makeStyles({
 	flex: {
@@ -23,7 +29,7 @@ const Form = ({
 	const classes = useStyles();
 
 	return (
-		<>
+		<Container>
 			<Drawer
 				open={open}
 				width={200}
@@ -104,7 +110,7 @@ const Form = ({
 					</FormGroup>
 				</form>
 			</Drawer>
-		</>
+		</Container>
 	);
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from './components/Form';
 import TeamList from './components/TeamList';
-import { Grid } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 import Navbar from './components/Navbar';
 import { initialData } from './blankData';
 
@@ -29,7 +29,6 @@ function App() {
 	function editMember(member) {
 		const newMemberList = teamMembers.map((teamMember, index) => {
 			if (teamMember.email === member.email) {
-				console.log('match!');
 				teamMembers[index] = member;
 			}
 			return teamMember;
@@ -113,10 +112,8 @@ function App() {
 			});
 	}, []);
 
-	// console.log(teamMembers);
-
 	return (
-		<Grid container fluid='true' direction='column' alignItems='center'>
+		<Container>
 			<Grid item>
 				<Navbar handleToggle={handleToggle} />
 			</Grid>
@@ -138,7 +135,7 @@ function App() {
 					isEditing={isEditing}
 				/>
 			</Grid>
-		</Grid>
+		</Container>
 	);
 }
 
