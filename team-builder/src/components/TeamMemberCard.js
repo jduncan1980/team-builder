@@ -46,16 +46,12 @@ const TeamMemberCard = ({
 						className={classes.large}
 					/>
 				}
-				subheader={
-					<Typography
-						component='h5'
-						variant='subtitle1'
-						color='secondary'
-					>{`${teamMember.location.city}, ${teamMember.location.state}, ${teamMember.location.country}`}</Typography>
-				}
+				// subheader={}
 				action={
 					<IconButton
 						aria-label='settings'
+						size='small'
+						edge={false}
 						onClick={() => {
 							handleToggle(teamMember);
 							setIsEditing(true);
@@ -67,6 +63,11 @@ const TeamMemberCard = ({
 				}
 			/>
 			<CardContent>
+				<Typography
+					component='h5'
+					variant='subtitle1'
+					color='secondary'
+				>{`${teamMember.location.city}, ${teamMember.location.state}, ${teamMember.location.country}`}</Typography>
 				<Typography component='h4'>{teamMember.email}</Typography>
 				<Typography component='h4'>{teamMember.phone}</Typography>
 			</CardContent>
